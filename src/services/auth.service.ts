@@ -28,7 +28,7 @@ export class AuthService {
    const data = await {
       email: input.email,
       password: input.password,
-      access_token: "eyJhbisdnaiwnsdisniaufwbsauddsa"
+      access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvbGVvbmFyZG9zaWx2YSIsImVtYWlsIjoibC42MDQyc2lsdmFAZ21haWwuY29tIiwiZXhwIjoxNzk2NDQ5MDIyfQ.acpJXYwWvYoM_ZERreemnG-aFb41A-CQyFYknxeLkmA"
    }
    
     const cookieStore = cookies();

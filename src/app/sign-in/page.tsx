@@ -3,7 +3,7 @@
 import { login } from "@/server-actions/auth.action";
 import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
-import { AlertTitle, Collapse, IconButton } from "@mui/material";
+import { Collapse, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 
@@ -14,9 +14,6 @@ export default function SignIn() {
     clearErrors,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
-
-  const [open, setOpen] = useState(false);
-
   const loginCall = async (data: any) => {
     await login(data);
   };
@@ -26,7 +23,7 @@ export default function SignIn() {
       <div
         style={{
           backgroundColor: "#773392",
-          backgroundImage: "linear-gradient(180deg, #401d4e 0%, #000000 94%)",
+          backgroundImage: "linear-gradient(180deg, #271130 0%, #000000 94%)",
         }}
         className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
       >
@@ -121,8 +118,14 @@ export default function SignIn() {
                   <input
                     {...register("password", {
                       required: "A senha é obrigatória",
-                      minLength: 8,
-                      maxLength: 30,
+                      minLength: {
+                        value: 8,
+                        message: "A senha deve ter no mínimo 8 caracteres",
+                      },
+                      maxLength: {
+                        value: 20,
+                        message: "A senha deve ter no máximo 20 caracteres",
+                      }
                     })}
                     aria-invalid={errors.password ? "true" : "false"}
                     id="password"
@@ -137,6 +140,7 @@ export default function SignIn() {
               <div>
                 <button
                   type="submit"
+                  autoFocus
                   className="flex w-full justify-center rounded-md bg-purple-900 px-3 py-1.5 text-sm font-semibold duration-300 leading-6 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 >
                   Entrar
