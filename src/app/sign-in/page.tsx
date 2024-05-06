@@ -5,14 +5,15 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { Collapse, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+
+import { arboriaFont } from "@/fonts/Arboria/arboria";
 
 export default function SignIn() {
   const {
     register,
     handleSubmit,
     clearErrors,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm();
   const loginCall = async (data: any) => {
     await login(data);
@@ -25,7 +26,7 @@ export default function SignIn() {
           backgroundColor: "#773392",
           backgroundImage: "linear-gradient(180deg, #271130 0%, #000000 94%)",
         }}
-        className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+        className={`${arboriaFont.className} flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8`}
       >
         <Collapse
           className="absolute w-80 top-7 right-7"
@@ -74,7 +75,7 @@ export default function SignIn() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-white"
+                  className="block text-base font-medium leading-6 text-white"
                 >
                   Endereço de e-mail
                 </label>
@@ -92,7 +93,7 @@ export default function SignIn() {
                     id="email"
                     name="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block focus:outline-none w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -101,7 +102,7 @@ export default function SignIn() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-white"
+                    className="block text-base font-medium leading-6 text-white"
                   >
                     Senha
                   </label>
@@ -125,14 +126,14 @@ export default function SignIn() {
                       maxLength: {
                         value: 20,
                         message: "A senha deve ter no máximo 20 caracteres",
-                      }
+                      },
                     })}
                     aria-invalid={errors.password ? "true" : "false"}
                     id="password"
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block focus:outline-none w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -141,7 +142,7 @@ export default function SignIn() {
                 <button
                   type="submit"
                   autoFocus
-                  className="flex w-full justify-center rounded-md bg-purple-900 px-3 py-1.5 text-sm font-semibold duration-300 leading-6 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
+                  className="flex w-full justify-center rounded-md bg-purple-900 px-3 py-1.5 text-base font-semibold duration-300 leading-6 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 >
                   Entrar
                 </button>
