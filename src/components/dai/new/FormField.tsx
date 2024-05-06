@@ -52,7 +52,7 @@ export default function FormField({
       {inputType === "arquivo" ? (
         <input
         style={{ backgroundColor: "#E3E2EA" }}
-          className="block file:cursor-pointer rounded-md file:rounded-ss-md file:text-white file:bg-purple-800 file:border-none w-full text-base border cursor-pointer text-black focus:outline-none placeholder-gray-900"
+          className="block file:p-2 file:cursor-pointer rounded-md file:rounded-ss-md file:text-white file:bg-purple-800 file:border-none w-full text-base border cursor-pointer text-black focus:outline-none placeholder-gray-900"
           id={props.id}
           type="file"
           accept=".pdf"
