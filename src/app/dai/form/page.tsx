@@ -1,7 +1,5 @@
 import FormField from "@/components/dai/new/FormField";
 import { arboriaFont } from "@/fonts/Arboria/arboria";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 
 export default function NewDai() {
   return (

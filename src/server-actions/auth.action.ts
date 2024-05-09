@@ -12,7 +12,7 @@ export async function login(data: { email: string; password: string; redirect_to
   /*if (error) {
     return error;
   }*/
-  redirect(redirect_to || "/dai/new");
+  redirect(redirect_to || "/dai");
 }
 
 export async function logoutAction() {
