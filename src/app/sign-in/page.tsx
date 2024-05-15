@@ -2,13 +2,12 @@
 
 import { login } from "@/server-actions/auth.action";
 import { useForm } from "react-hook-form";
-import Alert from "@mui/material/Alert";
-import { Collapse, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
+import { Login } from "@mui/icons-material";
 import { arboriaFont } from "@/fonts/Arboria/arboria";
 import { useState } from "react";
 import ErrorNotification from "@/components/ErrorNotification";
+import { LoadingButton } from "@mui/lab";
 
 export default function SignIn() {
   const {
@@ -17,30 +16,23 @@ export default function SignIn() {
     clearErrors,
     formState: { errors },
   } = useForm();
-  const [loginError, setLoginError] = useState<{error: string} | null>(null);
+  const [loginError, setLoginError] = useState<{ error: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getErrorsList = () => {
     const errorsList: string[] = [];
-    if (errors.email) {
-      errorsList.push(errors.email.message as string);
-    }
-    if (errors.password) {
-      errorsList.push(errors.password.message as string);
-    }
-    if (loginError) {
-      errorsList.push(loginError.error);
-    }
-    console.log(errorsList);
+    if (errors.email) errorsList.push(errors.email.message as string);
+    if (errors.password) errorsList.push(errors.password.message as string);
+    if (loginError) errorsList.push(loginError.error);
     return errorsList;
-  }
+  };
 
   const loginCall = async (data: any) => {
+    setIsLoading(true);
     const errResp = await login(data);
-    if (errResp) {
-      setLoginError(errResp);
-    } else {
-      setLoginError(null);
-    }
+    if (errResp) setLoginError(errResp);
+    else setLoginError(null);
+    setIsLoading(false);
   };
 
   return (
@@ -52,11 +44,13 @@ export default function SignIn() {
         }}
         className={`${arboriaFont.className} flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8`}
       >
-
-        <ErrorNotification errors={getErrorsList()} onClose={() => {
-          clearErrors();
-          setLoginError(null);
-        }}/>
+        <ErrorNotification
+          errors={getErrorsList()}
+          onClose={() => {
+            clearErrors();
+            setLoginError(null);
+          }}
+        />
 
         <div className="bg-black py-8 px-20 rounded-md max-w-fit self-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -65,7 +59,7 @@ export default function SignIn() {
               src="/creath.png"
               alt="Creath Digital"
             />
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
+            <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-white">
               Entre na sua conta
             </h2>
           </div>
@@ -143,12 +137,14 @@ export default function SignIn() {
               </div>
 
               <div>
-                <button
+                <LoadingButton
+                  className="w-full rounded-md bg-purple-900 px-3 py-1.5 text-base font-semibold duration-300 text-white shadow-sm hover:bg-purple-700"
+                  loading={isLoading}
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-purple-900 px-3 py-1.5 text-base font-semibold duration-300 leading-6 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
+                  variant="contained"
                 >
                   Entrar
-                </button>
+                </LoadingButton>
               </div>
             </form>
 
