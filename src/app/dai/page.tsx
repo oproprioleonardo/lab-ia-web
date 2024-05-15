@@ -1,14 +1,36 @@
 "use client";
 
+import ErrorNotification from "@/components/ErrorNotification";
 import { arboriaFont } from "@/fonts/Arboria/arboria";
 import { kallistoFont } from "@/fonts/Kallisto/kallisto";
-import { AttachFile, PictureAsPdf, Close } from "@mui/icons-material";
+import { createDAI } from "@/server-actions/dai.action";
+import { AttachFile, PictureAsPdf, Close, Save } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function PersonalizeDai() {
   const [knowledgeFile, setKnowledgeFile] = useState<File | null>(null);
   const [behaviorFile, setBehaviorFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<{ error: string } | null>(null);
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      const resp = await createDAI(formData);
+      if ("error" in resp) {
+        setError({ error: resp.error as string });
+      } else alert("DAI criada com sucesso");
+    } catch (error) {
+      setError({ error: "Não foi possível criar a DAI" });
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const handleKnowledgeFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -27,6 +49,13 @@ export default function PersonalizeDai() {
       }}
       className={`overflow-hidden min-h-full relative ${arboriaFont.className}`}
     >
+      <ErrorNotification
+        errors={error == null ? [] : [error.error]}
+        onClose={() => {
+          setError(null);
+        }}
+      />
+
       <header
         className={`mt-8 flex shadow-sm justify-start items-center bg-purple-900 text-white h-20 ${kallistoFont.className}`}
       >
@@ -53,7 +82,10 @@ export default function PersonalizeDai() {
         </div>
 
         <div className="w-full pt-6 pb-8">
-          <form className="flex flex-col items-center justify-between">
+          <form
+            onSubmit={onSubmit}
+            className="flex flex-col items-center justify-between"
+          >
             <div>
               <span className="text-xl">
                 Anexe os arquivos necessários para o funcionamento da DAI:
@@ -76,7 +108,7 @@ export default function PersonalizeDai() {
 
                 <div className="flex items-center justify-center w-full">
                   <label
-                    htmlFor="knowledge-file"
+                    htmlFor="knowledge_file"
                     className="flex flex-col items-center justify-center w-full h-24 border-2 border-purple-800 border-dashed rounded-lg cursor-pointer bg-gray-200 duration-300 hover:bg-gray-100"
                   >
                     <div className="flex flex-row items-center w-full">
@@ -98,7 +130,8 @@ export default function PersonalizeDai() {
                       </div>
                     </div>
                     <input
-                      id="knowledge-file"
+                      id="knowledge_file"
+                      name="knowledge_file"
                       type="file"
                       className="hidden"
                       accept=".pdf"
@@ -142,7 +175,7 @@ export default function PersonalizeDai() {
 
                 <div className="flex items-center justify-center w-full">
                   <label
-                    htmlFor="behavior-file"
+                    htmlFor="behavior_file"
                     className="flex flex-col items-center justify-center w-full h-24 border-2 border-purple-800 border-dashed rounded-lg cursor-pointer bg-gray-200 duration-300 hover:bg-gray-100"
                   >
                     <div className="flex flex-row items-center w-full">
@@ -164,7 +197,8 @@ export default function PersonalizeDai() {
                       </div>
                     </div>
                     <input
-                      id="behavior-file"
+                      id="behavior_file"
+                      name="behavior_file"
                       type="file"
                       accept=".pdf"
                       className="hidden"
@@ -195,9 +229,16 @@ export default function PersonalizeDai() {
               </div>
             </div>
 
-            <button className="mt-12 bg-cyan-500 px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300">
-              Confirmar
-            </button>
+            <LoadingButton
+              className="mt-12 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
+              loading={isLoading}
+              type="submit"
+              loadingPosition="start"
+              startIcon={<Save />}
+              variant="contained"
+            >
+              <span>Confirmar</span>
+            </LoadingButton>
           </form>
         </div>
       </div>

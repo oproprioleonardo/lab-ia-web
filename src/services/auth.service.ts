@@ -1,12 +1,20 @@
+import { SessionData } from "@/models";
 import { atob } from "buffer";
+import { sealData, unsealData } from "iron-session";
 import { cookies } from "next/headers";
 
 export class AuthService {
+  pass: string;
+
+  constructor() {
+    this.pass = process.env.IRON_SESSION_PASSWORD as string;
+  }
+
   async login(input: { email: string; password: string }) {
-    /*const response = await fetch(`${process.env.ORDERS_API_URL}/auth/login`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/auth/login`, {
       method: "POST",
       body: JSON.stringify({
-        username: input.email,
+        email: input.email,
         password: input.password,
       }),
       headers: {
@@ -14,66 +22,59 @@ export class AuthService {
       },
     });
 
-    if (response.status === 401) {
-      return { error: "Credenciais inválidas" };
-    }
-
-    if (!response.ok) {
-      const error = await response.json();
-      return { error };
-    }
+    if (response.status === 401) return { error: "Credenciais inválidas" };
+    if (response.status === 404) return { error: "Usuário não encontrado" };
+    if (!response.ok) return { error: "Ocorre um erro interno" };
 
     const data = await response.json();
-    */
-   const data = await {
-      email: input.email,
-      password: input.password,
-      access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvbGVvbmFyZG9zaWx2YSIsImVtYWlsIjoibC42MDQyc2lsdmFAZ21haWwuY29tIiwiZXhwIjoxNzk2NDQ5MDIyfQ.acpJXYwWvYoM_ZERreemnG-aFb41A-CQyFYknxeLkmA"
-   }
-   
-    const cookieStore = cookies();
-    //cookie criptografado
-    //iron session
-    cookieStore.set("token", data.access_token);
+    const session = {
+      access_token: data.token,
+      user: {
+        id: data.user.id,
+        email: data.user.email,
+        name: data.user.name,
+      },
+    };
+    await this.setSession(session);
   }
 
-  logout() {
-    const cookieStore = cookies();
-    cookieStore.delete("token");
+  async getSession() {
+    const encryptedSession = cookies().get("auth_session")?.value;
+    const session = encryptedSession
+      ? ((await unsealData(encryptedSession, {
+          password: this.pass,
+        })) as string)
+      : null;
+
+    return session ? (JSON.parse(session) as SessionData) : null;
   }
 
-  getUser() {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
-    if (!token) {
-      return null;
-    }
+  async setSession(session: SessionData) {
+    const encryptedSession = await sealData(JSON.stringify(session), {
+      password: this.pass,
+    });
 
-    const payloadBase64 = token.split(".")[1];
-    const payloadDecoded = atob(payloadBase64);
-    return JSON.parse(payloadDecoded);
+    cookies().set("auth_session", encryptedSession, {
+      sameSite: "strict",
+      httpOnly: true,
+      expires: new Date(this.getExpiration(session.access_token)),
+      // secure: true,
+    });
   }
 
-  getToken() {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
-
-    if (!token) {
-      return null;
-    }
-
-    return token;
+  async getToken() {
+    const session = await this.getSession();
+    return session?.access_token;
   }
 
-  isTokenExpired() {
-    const user = this.getUser();
-    if (!user) {
-      return true;
-    }
+  getExpiration(token: string | null = null) {
+    if (!token) return 0;
+    const [, payload] = token.split(".");
+    const data = JSON.parse(atob(payload));
+    return data.exp * 1000;
+  }
 
-    const now = new Date();
-    const exp = new Date(user.exp * 1000);
-
-    return now > exp;
+  async logout() {
+    cookies().delete("auth_session");
   }
 }

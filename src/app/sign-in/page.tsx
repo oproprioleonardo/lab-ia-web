@@ -7,6 +7,8 @@ import { Collapse, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { arboriaFont } from "@/fonts/Arboria/arboria";
+import { useState } from "react";
+import ErrorNotification from "@/components/ErrorNotification";
 
 export default function SignIn() {
   const {
@@ -15,8 +17,30 @@ export default function SignIn() {
     clearErrors,
     formState: { errors },
   } = useForm();
+  const [loginError, setLoginError] = useState<{error: string} | null>(null);
+
+  const getErrorsList = () => {
+    const errorsList: string[] = [];
+    if (errors.email) {
+      errorsList.push(errors.email.message as string);
+    }
+    if (errors.password) {
+      errorsList.push(errors.password.message as string);
+    }
+    if (loginError) {
+      errorsList.push(loginError.error);
+    }
+    console.log(errorsList);
+    return errorsList;
+  }
+
   const loginCall = async (data: any) => {
-    await login(data);
+    const errResp = await login(data);
+    if (errResp) {
+      setLoginError(errResp);
+    } else {
+      setLoginError(null);
+    }
   };
 
   return (
@@ -28,31 +52,11 @@ export default function SignIn() {
         }}
         className={`${arboriaFont.className} flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8`}
       >
-        <Collapse
-          className="absolute w-80 top-7 right-7"
-          in={!!errors.email?.message || !!errors.password?.message}
-        >
-          <Alert
-            severity="error"
-            className="bg-black text-red-300"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  clearErrors();
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-            sx={{ mb: 2, fontSize: "1rem" }}
-          >
-            {(errors.email?.message as string) ||
-              (errors.password?.message as string)}
-          </Alert>
-        </Collapse>
+
+        <ErrorNotification errors={getErrorsList()} onClose={() => {
+          clearErrors();
+          setLoginError(null);
+        }}/>
 
         <div className="bg-black py-8 px-20 rounded-md max-w-fit self-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -141,7 +145,6 @@ export default function SignIn() {
               <div>
                 <button
                   type="submit"
-                  autoFocus
                   className="flex w-full justify-center rounded-md bg-purple-900 px-3 py-1.5 text-base font-semibold duration-300 leading-6 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 >
                   Entrar
