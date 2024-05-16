@@ -11,12 +11,12 @@ export class AssistantService {
   async create(data: {
     name?: string;
     owner_id?: string;
-  }): Promise<{ error: string } | { id: string }> {
+  }): Promise<{ error: string } | { id: string; token: string }> {
     const session = await this.authService.getSession();
     if (!session) return { error: "Você não está autenticado" };
     if (!data.owner_id) data.owner_id = session.user.id;
     if (!data.name) data.name = "Assistente de " + session.user.name;
-    
+
     const response = await fetch(`${process.env.API_BASE_URL}/assistants/add`, {
       method: "POST",
       body: JSON.stringify(data),

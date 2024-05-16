@@ -6,6 +6,7 @@ import { kallistoFont } from "@/fonts/Kallisto/kallisto";
 import { createDAI } from "@/server-actions/dai.action";
 import { AttachFile, PictureAsPdf, Close, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import { Card } from "@mui/material";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -14,6 +15,7 @@ export default function PersonalizeDai() {
   const [behaviorFile, setBehaviorFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<{ error: string } | null>(null);
+  const [apiKey, setApiKey] = useState<string | null>(null);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,13 +26,20 @@ export default function PersonalizeDai() {
       const resp = await createDAI(formData);
       if ("error" in resp) {
         setError({ error: resp.error as string });
-      } else alert("DAI criada com sucesso");
+      } else {
+        setApiKey(resp.apiKey);
+      }
     } catch (error) {
       setError({ error: "Não foi possível criar a DAI" });
     } finally {
       setIsLoading(false);
     }
   }
+
+  const onClickCopy = () => {
+    if (!apiKey) return;
+    navigator.clipboard.writeText(apiKey);
+  };
 
   const handleKnowledgeFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -229,16 +238,29 @@ export default function PersonalizeDai() {
               </div>
             </div>
 
-            <LoadingButton
-              className="mt-12 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
-              loading={isLoading}
-              type="submit"
-              loadingPosition="start"
-              startIcon={<Save />}
-              variant="contained"
-            >
-              <span>Confirmar</span>
-            </LoadingButton>
+            {apiKey ? (
+              <div className="w-full flex justify-center items-center">
+                <div
+                  onClick={onClickCopy}
+                  className="mt-8 w-fit h-fit bg-blue-200 hover:bg-blue-100 duration-150 border-blue-600 border-solid border"
+                >
+                  <Card className="w-fit cursor-pointer px-6 py-3 mx-auto bg-transparent">
+                    API-Key: {apiKey}
+                  </Card>
+                </div>
+              </div>
+            ) : (
+              <LoadingButton
+                className="mt-12 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
+                loading={isLoading}
+                type="submit"
+                loadingPosition="start"
+                startIcon={<Save />}
+                variant="contained"
+              >
+                <span>Confirmar</span>
+              </LoadingButton>
+            )}
           </form>
         </div>
       </div>
