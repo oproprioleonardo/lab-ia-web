@@ -1,36 +1,76 @@
 "use client";
 
-import ErrorNotification from "@/components/ErrorNotification";
 import { arboriaFont } from "@/fonts/Arboria/arboria";
 import { kallistoFont } from "@/fonts/Kallisto/kallisto";
 import { createDAI } from "@/server-actions/dai.action";
 import { AttachFile, PictureAsPdf, Close, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Card } from "@mui/material";
+import {
+  Card,
+  Collapse,
+  Snackbar,
+  SnackbarContent,
+} from "@mui/material";
 import Link from "next/link";
-import { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 export default function PersonalizeDai() {
   const [knowledgeFile, setKnowledgeFile] = useState<File | null>(null);
   const [behaviorFile, setBehaviorFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<{ error: string } | null>(null);
   const [apiKey, setApiKey] = useState<string | null>(null);
+  const [notificationState, setNotificationState] = useState<{
+    open: boolean;
+    message: string;
+    bgColor: string;
+  }>({
+    open: false,
+    message: "DAI criada com sucesso!",
+    bgColor: "bg-green-700",
+  });
+
+  function notifySuccess(message: string) {
+    setNotificationState({
+      open: true,
+      message: message,
+      bgColor: "bg-green-700",
+    });
+  }
+
+  function notifyError(message: string) {
+    setNotificationState({
+      open: true,
+      message: message,
+      bgColor: "bg-red-600",
+    });
+  }
+
+  const notificationHandleClose = () =>
+    setNotificationState({
+      ...notificationState,
+      open: false,
+    });
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
+    if (!knowledgeFile || !behaviorFile) {
+      notifyError("Por favor, anexe os arquivos necessários para a DAI");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const formData = new FormData(event.currentTarget);
       const resp = await createDAI(formData);
       if ("error" in resp) {
-        setError({ error: resp.error as string });
+        notifyError(resp.error as string);
       } else {
         setApiKey(resp.apiKey);
+        notifySuccess("DAI criada com sucesso!");
       }
-    } catch (error) {
-      setError({ error: "Não foi possível criar a DAI" });
+    } catch (e) {
+      notifyError("Não foi possível criar a DAI");
     } finally {
       setIsLoading(false);
     }
@@ -44,11 +84,15 @@ export default function PersonalizeDai() {
   const handleKnowledgeFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setKnowledgeFile(file);
+    setApiKey(null);
+    e.target.value = "";
   };
 
   const handleBehaviorFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
+    setApiKey(null);
     setBehaviorFile(file);
+    e.target.value = "";
   };
 
   return (
@@ -58,13 +102,6 @@ export default function PersonalizeDai() {
       }}
       className={`overflow-hidden min-h-full relative ${arboriaFont.className}`}
     >
-      <ErrorNotification
-        errors={error == null ? [] : [error.error]}
-        onClose={() => {
-          setError(null);
-        }}
-      />
-
       <header
         className={`mt-8 flex shadow-sm justify-start items-center bg-purple-900 text-white h-20 ${kallistoFont.className}`}
       >
@@ -78,19 +115,23 @@ export default function PersonalizeDai() {
       </section>
 
       <div className="w-full bg-gray-100">
-        <div className="w-full flex flex-row items-center justify-center pt-6 pb-6">
-          <Link href="/dai/form">
-            <button className="text-xl p-6 rounded-2xl shadow-xl bg-cyan-500 text-black duration-150 hover:bg-cyan-300">
-              Clique aqui para preencher o Formulário de Informações
-            </button>
-          </Link>
-        </div>
+        <Collapse in={!knowledgeFile && !behaviorFile} unmountOnExit>
+          <div>
+            <div className="w-full flex flex-row items-center justify-center pt-6 pb-4">
+              <Link href="/dai/form">
+                <button className="text-xl px-6 py-4 rounded-2xl shadow-xl bg-cyan-500 text-black duration-150 hover:bg-cyan-300">
+                  Clique aqui para preencher o Formulário de Informações
+                </button>
+              </Link>
+            </div>
 
-        <div className="flex flex-row justify-around items-center">
-          <span className="text-xl">OU</span>
-        </div>
+            <div className="flex flex-row justify-around items-center">
+              <span className="text-xl">OU</span>
+            </div>
+          </div>
+        </Collapse>
 
-        <div className="w-full pt-6 pb-8">
+        <Collapse in={true} className="w-full pt-4 pb-8">
           <form
             onSubmit={onSubmit}
             className="flex flex-col items-center justify-between"
@@ -262,8 +303,21 @@ export default function PersonalizeDai() {
               </LoadingButton>
             )}
           </form>
-        </div>
+        </Collapse>
       </div>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={notificationState.open}
+        onClose={notificationHandleClose}
+        key="topright"
+        autoHideDuration={2000}
+      >
+        <SnackbarContent
+          message={notificationState.message}
+          className={`${notificationState.bgColor} text-gray-100`}
+        />
+      </Snackbar>
 
       <footer className="pt-12 text-center bg-gray-100 text-sm text-gray-500 pb-4">
         <span>&copy; 2024 Creath Digital. Todos os direitos reservados.</span>

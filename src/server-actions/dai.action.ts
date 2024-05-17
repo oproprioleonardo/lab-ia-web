@@ -11,7 +11,7 @@ export async function createDAI(
   if ("error" in assistantResp) return assistantResp;
 
   const assistantId = assistantResp.id;
-  const apiKey = assistantResp.token;
+  const apiKey = assistantResp.api_key;
   const behaviorDocumentResp = await assistantService.attachDocument({
     assistantId,
     file: formData.get("behavior_file") as File,

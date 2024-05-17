@@ -11,7 +11,7 @@ export class AssistantService {
   async create(data: {
     name?: string;
     owner_id?: string;
-  }): Promise<{ error: string } | { id: string; token: string }> {
+  }): Promise<{ error: string } | { id: string; api_key: string }> {
     const session = await this.authService.getSession();
     if (!session) return { error: "Você não está autenticado" };
     if (!data.owner_id) data.owner_id = session.user.id;
