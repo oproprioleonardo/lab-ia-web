@@ -1,3 +1,3 @@
-export const protectedRoutes = ["/profile", "/home", "/dai/new", "/dai"];
-export const authRoutes = ["/sign-in"];
-export const publicRoutes = ["/about", "/sign-in"];
+export const protectedRoutes = ["/profile", "/dashboard", "/dai/new", "/dai"];
+export const authRoutes = ["/auth/sign-in"];
+export const publicRoutes = ["/about", "/auth/sign-in"];

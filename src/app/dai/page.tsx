@@ -91,7 +91,7 @@ export default function PersonalizeDai() {
         <header
           className={`flex shadow-sm justify-start items-center header-background text-white h-20 ${kallistoFont.className}`}
         >
-          <h1 className={`ml-24 font-semibold text-2xl`}>
+          <h1 className={`mx-auto font-semibold text-2xl`}>
             DAI Assistente Inteligente
           </h1>
         </header>
@@ -113,7 +113,7 @@ export default function PersonalizeDai() {
             <div>
               <div className="w-full flex flex-row items-center justify-center pt-6 pb-4">
                 <Link href="/dai/form">
-                  <button className="text-xl px-6 py-4 rounded-2xl shadow-xl bg-cyan-500 text-black duration-150 hover:bg-cyan-300">
+                  <button className="text-xl px-6 py-4 rounded-md sm:rounded-2xl shadow-xl bg-cyan-500 text-black duration-150 hover:bg-cyan-300">
                     Clique aqui para preencher o Formulário de Informações
                   </button>
                 </Link>
@@ -130,13 +130,13 @@ export default function PersonalizeDai() {
               onSubmit={onSubmit}
               className="flex flex-col items-center justify-between"
             >
-              <div>
+              <div className="text-center mx-4 md:mx-0">
                 <span className="text-xl">
                   Anexe os arquivos necessários para o funcionamento da DAI:
                 </span>
               </div>
 
-              <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-2/3 h-fit">
+              <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-full md:w-2/3 h-fit">
                 <div className="py-8 px-12 bg-white rounded-md shadow-md flex flex-col xl:w-5/12 w-full xl:mb-0 mb-8">
                   <div className="mb-3">
                     <span className="text-xl">Conhecimento</span>
@@ -298,6 +298,7 @@ export default function PersonalizeDai() {
                   </div>
                 </div>
               ) : (
+                <Grow in={!!knowledgeFile && !!behaviorFile}>
                 <LoadingButton
                   className="mt-16 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
                   loading={isLoading}
@@ -308,6 +309,7 @@ export default function PersonalizeDai() {
                 >
                   <span>Confirmar</span>
                 </LoadingButton>
+                </Grow>
               )}
             </form>
           </div>

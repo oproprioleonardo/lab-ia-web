@@ -25,11 +25,11 @@ export class AssistantService {
         Authorization: `Bearer ${await this.authService.getToken()}`,
       },
     });
-
+    
     if (response.status === 401) return { error: "Você não está autenticado" };
     if (response.status === 403) return { error: "Você não tem permissão" };
-    if (response.status !== 201) return { error: "Erro ao criar o assistente" };
-
+    if (response.status !== 201) return { error: "Ocorreu um erro interno" };
+    
     return await response.json();
   }
 

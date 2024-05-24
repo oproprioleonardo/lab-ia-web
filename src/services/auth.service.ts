@@ -27,7 +27,7 @@ export class AuthService {
     if (!response.ok) return { error: "Ocorre um erro interno" };
 
     const data = await response.json();
-    const session = {
+    const session : SessionData = {
       access_token: data.token,
       user: {
         id: data.user.id,

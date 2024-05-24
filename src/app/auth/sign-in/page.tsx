@@ -37,7 +37,7 @@ export default function SignIn() {
         <header
           className={`flex mt-8 shadow-sm w-full justify-start items-center header-background text-white h-20 ${kallistoFont.className}`}
         >
-          <h1 className={`ml-24 font-semibold text-2xl`}>
+          <h1 className={`mx-auto font-semibold text-2xl`}>
             DAI Assistente Inteligente
           </h1>
         </header>

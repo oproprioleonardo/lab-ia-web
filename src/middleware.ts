@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
     const exp = getExpiration(sessionData?.access_token);
     const now = new Date().getTime();
     if (now > exp) {
-      const resp = NextResponse.redirect(new URL("/sign-in", request.nextUrl));
+      const resp = NextResponse.redirect(new URL("/auth/sign-in", request.nextUrl));
       resp.cookies.delete("auth_session");
       return resp;
     }
