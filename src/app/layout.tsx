@@ -15,7 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" className="h-full bg-white">
+    <html lang="pt-br" className="h-full" style={{
+      backgroundColor: "#E1DEED"
+    }}>
       <body className="h-full">
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>

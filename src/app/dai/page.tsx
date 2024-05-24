@@ -100,7 +100,7 @@ export default function PersonalizeDai() {
           style={{ backgroundColor: "#E1DEED" }}
         ></div>
         <header
-          className={`flex shadow-sm justify-start items-center bg-purple-900 text-white h-20 ${kallistoFont.className}`}
+          className={`flex shadow-sm justify-start items-center header-background text-white h-20 ${kallistoFont.className}`}
         >
           <h1 className={`ml-24 font-semibold text-2xl`}>
             DAI Assistente Inteligente
@@ -147,7 +147,7 @@ export default function PersonalizeDai() {
                 </span>
               </div>
 
-              <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-2/3 xl:w-9/12 h-fit">
+              <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-2/3 h-fit">
                 <div className="py-8 px-12 bg-white rounded-md shadow-md flex flex-col xl:w-5/12 w-full xl:mb-0 mb-8">
                   <div className="mb-3">
                     <span className="text-xl">Conhecimento</span>
@@ -171,7 +171,7 @@ export default function PersonalizeDai() {
                             className="text-white"
                           />
                         </div>
-                        <div className="text-sm text-black">
+                        <div className="text-sm text-black mr-6">
                           <p>
                             <span className="font-semibold">
                               Arraste e solte
@@ -242,10 +242,10 @@ export default function PersonalizeDai() {
                             style={{
                               fontSize: "2.0rem",
                             }}
-                            className="text-white "
+                            className="text-white"
                           />
                         </div>
-                        <div className="text-sm text-black">
+                        <div className="text-sm text-black mr-6">
                           <p>
                             <span className="font-semibold">
                               Arraste e solte

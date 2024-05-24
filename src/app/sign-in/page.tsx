@@ -3,11 +3,12 @@
 import { login } from "@/server-actions/auth.action";
 import { useForm } from "react-hook-form";
 
-import { Login } from "@mui/icons-material";
 import { arboriaFont } from "@/fonts/Arboria/arboria";
 import { useState } from "react";
 import ErrorNotification from "@/components/ErrorNotification";
 import { LoadingButton } from "@mui/lab";
+import { kallistoFont } from "@/fonts/Kallisto/kallisto";
+import { TextField } from "@mui/material";
 
 export default function SignIn() {
   const {
@@ -21,8 +22,6 @@ export default function SignIn() {
 
   const getErrorsList = () => {
     const errorsList: string[] = [];
-    if (errors.email) errorsList.push(errors.email.message as string);
-    if (errors.password) errorsList.push(errors.password.message as string);
     if (loginError) errorsList.push(loginError.error);
     return errorsList;
   };
@@ -38,12 +37,16 @@ export default function SignIn() {
   return (
     <>
       <div
-        style={{
-          backgroundColor: "#773392",
-          backgroundImage: "linear-gradient(180deg, #271130 0%, #000000 94%)",
-        }}
-        className={`${arboriaFont.className} flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8`}
+        className={`${arboriaFont.className} flex min-h-full flex-1 flex-col items-center`}
       >
+        <header
+          className={`flex mt-8 shadow-sm w-full justify-start items-center header-background text-white h-20 ${kallistoFont.className}`}
+        >
+          <h1 className={`ml-24 font-semibold text-2xl`}>
+            DAI Assistente Inteligente
+          </h1>
+        </header>
+
         <ErrorNotification
           errors={getErrorsList()}
           onClose={() => {
@@ -52,119 +55,174 @@ export default function SignIn() {
           }}
         />
 
-        <div className="bg-black py-8 px-20 rounded-md max-w-fit self-center">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              className="mx-auto h-14 w-auto"
-              src="/creath.png"
-              alt="Creath Digital"
-            />
-            <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-              Entre na sua conta
-            </h2>
-          </div>
-
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form
-              className="space-y-6"
-              onSubmit={handleSubmit(loginCall)}
-              method="POST"
-            >
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-base font-medium leading-6 text-white"
-                >
-                  Endereço de e-mail
-                </label>
-                <div className="mt-2">
-                  <input
-                    {...register("email", {
-                      required: "O e-mail é obrigatório",
-                      maxLength: 80,
-                      pattern: {
-                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                        message: "O e-mail é inválido",
-                      },
-                    })}
-                    aria-invalid={errors.email ? "true" : "false"}
-                    id="email"
-                    name="email"
-                    autoComplete="email"
-                    className="block focus:outline-none w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-base font-medium leading-6 text-white"
-                  >
-                    Senha
-                  </label>
-                  <div className="text-sm">
-                    <a
-                      href="#"
-                      className="font-semibold text-purple-600 hover:text-purple-500"
-                    >
-                      Esqueceu a sua senha?
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                    {...register("password", {
-                      required: "A senha é obrigatória",
-                      minLength: {
-                        value: 8,
-                        message: "A senha deve ter no mínimo 8 caracteres",
-                      },
-                      maxLength: {
-                        value: 20,
-                        message: "A senha deve ter no máximo 20 caracteres",
-                      },
-                    })}
-                    aria-invalid={errors.password ? "true" : "false"}
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    className="block focus:outline-none w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <LoadingButton
-                  className="w-full rounded-md bg-purple-900 px-3 py-1.5 text-base font-semibold duration-300 text-white shadow-sm hover:bg-purple-700"
-                  loading={isLoading}
-                  type="submit"
-                  variant="contained"
-                >
-                  Entrar
-                </LoadingButton>
-              </div>
-            </form>
-
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Não possui uma conta?{" "}
-              <a
-                href="#"
-                className="font-semibold leading-6 text-purple-600 hover:text-purple-500"
+        <div className="flex-grow flex items-center justify-center">
+          <div className="bg-gray-50 py-8 px-20 rounded-xl max-w-fit self-center text-purple-800">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <h2
+                className={`mt-6 text-center text-3xl font-bold leading-9 tracking-tight ${arboriaFont.className}`}
               >
-                Veja nossos planos
-              </a>
-            </p>
+                Log-in
+              </h2>
+            </div>
+
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+              <form
+                className="space-y-6"
+                onSubmit={handleSubmit(loginCall)}
+                method="POST"
+              >
+                
+                  <div className="mt-2">
+                    <TextField
+                    label="E-mail"
+                    variant="outlined"
+                      {...register("email", {
+                        required: "O e-mail é obrigatório",
+                        maxLength: 80,
+                        pattern: {
+                          value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                          message: "O e-mail é inválido",
+                        },
+                      })}
+                      error={!!errors.email}
+                      helperText={errors.email ? errors.email.message as string : ""}
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      style={{ width: "100%" }}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          fontWeight: "bold",
+                          backgroundColor: "#e1e2e6",
+                          borderWidth: "0px",
+                          border: "none",
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                            borderWidth: "0px",
+                          },
+                        },
+                        "&.Mui-focused": {
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                            borderWidth: "0px",
+                          },
+                        },
+                        "&:hover:not(.Mui-focused)": {
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                            borderWidth: "0px",
+                          },
+                        },
+                        "& .MuiInputLabel-outlined": {
+                          color: "#553c9a",
+                          fontWeight: "bold",
+                          border: "none",
+                          borderWidth: "0px",
+                          "&.Mui-focused": {
+                            border: "none",
+                            borderWidth: "0px",
+                            color: "#553c9a",
+                            fontWeight: "bold",
+                          },
+                        },
+                      }}
+                    />
+                  </div>
+                
+
+                
+                  <div className="mt-4">
+                    <TextField
+                      label="Senha"
+                      variant="outlined"
+                      {...register("password", {
+                        required: "A senha é obrigatória",
+                        minLength: {
+                          value: 8,
+                          message: "A senha deve ter no mínimo 8 caracteres",
+                        },
+                        maxLength: {
+                          value: 20,
+                          message: "A senha deve ter no máximo 20 caracteres",
+                        },
+                      })}
+                      error={!!errors.password}
+                      helperText={errors.password ? errors.password.message as string : ""}
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      style={{ width: "100%"}}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          fontWeight: "bold",
+                          backgroundColor: "#e1e2e6",
+                          borderWidth: "0px",
+                          border: "none",
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                            borderWidth: "0px",
+                          },
+                        },
+                        "&.Mui-focused": {
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                            borderWidth: "0px",
+                          },
+                        },
+                        "&:hover:not(.Mui-focused)": {
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                            borderWidth: "0px",
+                          },
+                        },
+                        "& .MuiInputLabel-outlined": {
+                          color: "#553c9a",
+                          fontWeight: "bold",
+                          border: "none",
+                          borderWidth: "0px",
+                          "&.Mui-focused": {
+                            border: "none",
+                            borderWidth: "0px",
+                            color: "#553c9a",
+                            fontWeight: "bold",
+                          },
+                        },
+                      }}
+                    />
+                  </div>
+                
+
+                <div className="text-base w-full text-center underline">
+                  <a href="#" className="font-semibold hover:text-purple-600">
+                    Esqueceu a sua senha?
+                  </a>
+                </div>
+
+                <div>
+                  <LoadingButton
+                    className="w-full h-10 rounded-md text-black bg-cyan-500 px-3 py-3 text-base font-semibold duration-300 shadow-sm hover:bg-cyan-400"
+                    loading={isLoading}
+                    type="submit"
+                    variant="contained"
+                  >
+                    {!isLoading && "Entrar"}
+                  </LoadingButton>
+                </div>
+              </form>
+
+              <p className="mt-10 text-center text-sm">
+                Não possui uma conta?{" "}
+                <a
+                  href="#"
+                  className="font-semibold leading-6 hover:text-purple-600"
+                >
+                  Veja nossos planos
+                </a>
+              </p>
+            </div>
           </div>
         </div>
-
-        <footer className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <p className="text-center text-sm text-gray-500">
-            &copy; 2024 Creath Digital. Todos os direitos reservados.
-          </p>
-        </footer>
       </div>
     </>
   );
