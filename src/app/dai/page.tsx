@@ -3,12 +3,13 @@
 import { arboriaFont } from "@/fonts/Arboria/arboria";
 import { kallistoFont } from "@/fonts/Kallisto/kallisto";
 import { createDAI } from "@/server-actions/dai.action";
+import { toastConfig } from "@/utils";
 import { AttachFile, PictureAsPdf, Close, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Card, Collapse, Grow } from "@mui/material";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -19,18 +20,6 @@ export default function PersonalizeDai() {
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [growBehavior, setGrowBehavior] = useState<boolean>(false);
   const [growKnowledge, setGrowKnowledge] = useState<boolean>(false);
-
-  const toastConfig: ToastOptions = {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    transition: Bounce,
-  };
 
   function notifySuccess(message: string) {
     toast.success(message, toastConfig);
