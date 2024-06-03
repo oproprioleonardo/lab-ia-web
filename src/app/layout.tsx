@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
 
@@ -15,9 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" className="h-full" style={{
-      backgroundColor: "#E1DEED"
-    }}>
+    <html
+      lang="pt-br"
+      className="h-full"
+      style={{
+        backgroundColor: "#E1DEED",
+      }}
+    >
       <body className="h-full">
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>

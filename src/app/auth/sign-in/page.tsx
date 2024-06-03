@@ -32,17 +32,17 @@ export default function SignIn() {
     <>
       <ToastContainer />
       <div
-        className={`${arboriaFont.className} flex min-h-full flex-1 flex-col items-center`}
+        className={`${arboriaFont.className} flex min-h-full flex-col items-center`}
       >
         <header
-          className={`flex mt-8 shadow-sm w-full justify-start items-center header-background text-white h-20 ${kallistoFont.className}`}
+          className={`flex mt-8 shadow-sm w-full justify-center items-center header-background text-white h-20 ${kallistoFont.className}`}
         >
           <h1 className={`mx-auto font-semibold text-2xl`}>
             DAI Assistente Inteligente
           </h1>
         </header>
 
-        <div className="flex-grow flex items-center justify-center">
+        <div className="mt-32 flex items-center justify-center">
           <div className="bg-gray-50 py-8 px-20 rounded-xl max-w-fit self-center text-purple-800">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <h2
