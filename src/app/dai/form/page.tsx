@@ -45,18 +45,18 @@ export default function NewDai() {
     if (fields.comportamento === null) return 3;
     if (
       !(fields.comportamento instanceof File) &&
-      fields.comportamento.length < 200
+      fields.comportamento.length < 20
     )
       return 3;
-    if (fields.comportamento instanceof File && !fields.comportamento) return 4;
-    if (fields.observacoes === null) return 5;
+    if (fields.comportamento instanceof File && !fields.comportamento) return 3;
+    if (fields.observacoes === null) return 4;
     if (
       !(fields.observacoes instanceof File) &&
       fields.observacoes.length < 200
     )
-      return 5;
-    if (fields.observacoes instanceof File && !fields.observacoes) return 5;
-    return 6;
+      return 4;
+    if (fields.observacoes instanceof File && !fields.observacoes) return 4;
+    return 5;
   };
 
   return (

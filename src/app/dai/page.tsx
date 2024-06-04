@@ -114,13 +114,9 @@ export default function PersonalizeDai() {
               <div className="w-full flex flex-row items-center justify-center pt-6 pb-4">
                 <Link href="/dai/form">
                   <button className="text-xl px-6 py-4 rounded-md sm:rounded-2xl shadow-xl bg-cyan-500 text-black duration-150 hover:bg-cyan-300">
-                    Clique aqui para preencher o Formulário de Informações
+                    Preencher Formulário de Informações
                   </button>
                 </Link>
-              </div>
-
-              <div className="flex flex-row justify-around items-center">
-                <span className="text-xl">OU</span>
               </div>
             </div>
           </Collapse>

@@ -6,20 +6,25 @@ import { useForm } from "react-hook-form";
 import { arboriaFont } from "@/fonts/Arboria/arboria";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import { kallistoFont } from "@/fonts/Kallisto/kallisto";
-import { TextField } from "@mui/material";
 
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import { toastConfig } from "@/utils";
+import BackgroundEllipses from "@/components/BackgroundEllipses";
+import { Input } from "@nextui-org/react";
+import { EyeSlashFilledIcon } from "@/icons/EyeSlashFilledIcon";
+import { EyeFilledIcon } from "@/icons/EyeFilledIcon";
 
 export default function SignIn() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [isLoading, setIsLoading] = useState(false);
 
   const loginCall = async (data: any) => {
     setIsLoading(true);
@@ -29,27 +34,22 @@ export default function SignIn() {
   };
 
   return (
-    <>
+    <div className="h-full relative">
       <ToastContainer />
+      <BackgroundEllipses />
       <div
-        className={`${arboriaFont.className} flex min-h-full flex-col items-center`}
-      >
-        <header
-          className={`flex mt-8 shadow-sm w-full justify-center items-center header-background text-white h-20 ${kallistoFont.className}`}
-        >
-          <h1 className={`mx-auto font-semibold text-2xl`}>
-            DAI Assistente Inteligente
-          </h1>
-        </header>
+        className={`${arboriaFont.className} flex flex-col justify-center items-center h-full`}
 
-        <div className="mt-32 flex items-center justify-center">
-          <div className="bg-gray-50 py-8 px-20 rounded-xl max-w-fit self-center text-purple-800">
+        /* background: linear-gradient(147.33deg, rgba(0, 164, 246, 0.3) 0%, rgba(119, 56, 255, 0.3) 100%);*/
+      >
+        <div className="flex items-center justify-center z-10 rounded-xl bg-gradient-to-br from-blue-300 to-purple-300 p-1">
+          <div className="bg-gray-50 py-8 px-20 max-w-fit self-center rounded-lg text-purple-800">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <h2
-                className={`mt-6 text-center text-3xl font-bold leading-9 tracking-tight ${arboriaFont.className}`}
+              <div
+                className={`mt-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-950 to-cyan-300 text-3xl font-bold leading-9 tracking-tight ${arboriaFont.className}`}
               >
                 Log-in
-              </h2>
+              </div>
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -59,9 +59,8 @@ export default function SignIn() {
                 method="POST"
               >
                 <div className="mt-2">
-                  <TextField
+                  <Input
                     label="E-mail"
-                    variant="outlined"
                     {...register("email", {
                       required: "O e-mail é obrigatório",
                       maxLength: 80,
@@ -70,57 +69,26 @@ export default function SignIn() {
                         message: "O e-mail é inválido",
                       },
                     })}
-                    error={!!errors.email}
-                    helperText={
+                    isInvalid={!!errors.email}
+                    errorMessage={
                       errors.email ? (errors.email.message as string) : ""
                     }
                     id="email"
                     name="email"
                     autoComplete="email"
-                    style={{ width: "100%" }}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        fontWeight: "bold",
-                        backgroundColor: "#e1e2e6",
-                        borderWidth: "0px",
-                        border: "none",
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                          borderWidth: "0px",
-                        },
-                      },
-                      "&.Mui-focused": {
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                          borderWidth: "0px",
-                        },
-                      },
-                      "&:hover:not(.Mui-focused)": {
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                          borderWidth: "0px",
-                        },
-                      },
-                      "& .MuiInputLabel-outlined": {
-                        color: "#553c9a",
-                        fontWeight: "bold",
-                        border: "none",
-                        borderWidth: "0px",
-                        "&.Mui-focused": {
-                          border: "none",
-                          borderWidth: "0px",
-                          color: "#553c9a",
-                          fontWeight: "bold",
-                        },
-                      },
-                    }}
+                    classNames={
+                      {
+                        base: "w-full",
+                        inputWrapper: "bg-white border-2 border-blue-300 rounded-md data-[hover=true]:bg-white group-data-[focus=true]:bg-white group-data-[focus-visible=true]:ring-0",
+                        label: "text-purple-800 font-medium group-data-[filled-within=true]:text-purple-800",
+                      }
+                    }
                   />
                 </div>
 
                 <div className="mt-4">
-                  <TextField
+                  <Input
                     label="Senha"
-                    variant="outlined"
                     {...register("password", {
                       required: "A senha é obrigatória",
                       minLength: {
@@ -132,51 +100,30 @@ export default function SignIn() {
                         message: "A senha deve ter no máximo 20 caracteres",
                       },
                     })}
-                    error={!!errors.password}
-                    helperText={
+                    isInvalid={!!errors.password}
+                    errorMessage={
                       errors.password ? (errors.password.message as string) : ""
                     }
                     id="password"
                     name="password"
-                    type="password"
                     autoComplete="current-password"
-                    style={{ width: "100%" }}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        fontWeight: "bold",
-                        backgroundColor: "#e1e2e6",
-                        borderWidth: "0px",
-                        border: "none",
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                          borderWidth: "0px",
-                        },
-                      },
-                      "&.Mui-focused": {
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                          borderWidth: "0px",
-                        },
-                      },
-                      "&:hover:not(.Mui-focused)": {
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                          borderWidth: "0px",
-                        },
-                      },
-                      "& .MuiInputLabel-outlined": {
-                        color: "#553c9a",
-                        fontWeight: "bold",
-                        border: "none",
-                        borderWidth: "0px",
-                        "&.Mui-focused": {
-                          border: "none",
-                          borderWidth: "0px",
-                          color: "#553c9a",
-                          fontWeight: "bold",
-                        },
-                      },
-                    }}
+                    endContent={
+                      <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                        {isVisible ? (
+                          <EyeSlashFilledIcon className="text-2xl text-purple-800 pointer-events-none" />
+                        ) : (
+                          <EyeFilledIcon className="text-2xl text-purple-800 pointer-events-none" />
+                        )}
+                      </button>
+                    }
+                    type={isVisible ? "text" : "password"}
+                    classNames={
+                      {
+                        base: "w-full",
+                        inputWrapper: "bg-white border-2 border-blue-300 rounded-md data-[hover=true]:bg-white group-data-[focus=true]:bg-white group-data-[focus-visible=true]:ring-0",
+                        label: "text-purple-800 font-medium group-data-[filled-within=true]:text-purple-800",
+                      }
+                    }
                   />
                 </div>
 
@@ -188,17 +135,22 @@ export default function SignIn() {
 
                 <div>
                   <LoadingButton
-                    className="w-full h-10 rounded-md text-black bg-cyan-500 px-3 py-3 text-base font-semibold duration-300 shadow-sm hover:bg-cyan-400"
+                    className="w-full h-10 rounded-md text-white hover:text-gray-50 btn-background px-3 py-3 text-base font-medium shadow-sm"
                     loading={isLoading}
                     type="submit"
                     variant="contained"
+                    sx={{
+                      ".MuiLoadingButton-loadingIndicator": {
+                        color: "white",
+                      }
+                    }}
                   >
                     {!isLoading && "Entrar"}
                   </LoadingButton>
                 </div>
               </form>
 
-              <p className="mt-10 text-center text-sm">
+              <p className="mt-12 mb-8 text-center text-sm">
                 Não possui uma conta?{" "}
                 <a
                   href="#"
@@ -211,6 +163,6 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
