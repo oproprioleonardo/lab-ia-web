@@ -84,7 +84,7 @@ export default function NewDai() {
 
       <div className="flex flex-row justify-evenly items-start mt-8 w-full">
         <form
-          className="bg-white shadow-sm rounded-md w-8/12"
+          className="bg-white shadow-sm rounded-md w-full xl:w-8/12"
           autoComplete="off"
         >
           <FormField
