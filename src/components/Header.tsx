@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <div className="w-full flex justify-center pt-6">
       <div
-        className={`flex flex-row justify-between items-center py-4 px-6 ${redditFont.className} rounded-3xl bg-white bg-opacity-80 text-purple-900 w-10/12`}
+        className={`flex flex-row justify-between items-center py-4 px-6 ${redditFont.className} rounded-3xl bg-white bg-opacity-80 text-purple-900 w-9/12`}
       >
         <div>
           <span className="text-colorful text-2xl font-bold">
