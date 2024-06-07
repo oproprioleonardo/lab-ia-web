@@ -2,8 +2,8 @@
 
 import CustomizedSteppers from "@/components/CustomizedSteppers";
 import FormField from "@/components/FormField";
-import { arboriaFont } from "@/fonts/arboria";
-import { kallistoFont } from "@/fonts/kallisto";
+import arboriaFont from "@/fonts/arboria";
+import kallistoFont from "@/fonts/kallisto";
 import { useState } from "react";
 
 const steps = [
