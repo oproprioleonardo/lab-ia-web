@@ -3,14 +3,13 @@
 import { login } from "@/server-actions/auth.action";
 import { useForm } from "react-hook-form";
 
-import { arboriaFont } from "@/fonts/Arboria/arboria";
+import arboriaFont from "@/fonts/arboria";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import { toastConfig } from "@/utils";
-import BackgroundEllipses from "@/components/BackgroundEllipses";
 import { Input } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "@/icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/icons/EyeFilledIcon";
@@ -34,19 +33,14 @@ export default function SignIn() {
   };
 
   return (
-    <div className="h-full relative">
+    <div className="min-h-full relative flex flex-col justify-center items-center background-img">
       <ToastContainer />
-      <BackgroundEllipses />
-      <div
-        className={`${arboriaFont.className} flex flex-col justify-center items-center h-full`}
-
-        /* background: linear-gradient(147.33deg, rgba(0, 164, 246, 0.3) 0%, rgba(119, 56, 255, 0.3) 100%);*/
-      >
-        <div className="flex items-center justify-center z-10 rounded-xl bg-gradient-to-br from-blue-300 to-purple-300 p-1">
+      <div className={`${arboriaFont.className} z-10 h-fit`}>
+        <div className="flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-300 to-purple-300 p-1">
           <div className="bg-gray-50 py-8 px-20 max-w-fit self-center rounded-lg text-purple-800">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <div
-                className={`mt-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-950 to-cyan-300 text-3xl font-bold leading-9 tracking-tight ${arboriaFont.className}`}
+                className={`mt-6 text-center text-colorful text-3xl font-bold leading-9 tracking-tight ${arboriaFont.className}`}
               >
                 Log-in
               </div>
@@ -76,13 +70,13 @@ export default function SignIn() {
                     id="email"
                     name="email"
                     autoComplete="email"
-                    classNames={
-                      {
-                        base: "w-full",
-                        inputWrapper: "bg-white border-2 border-blue-300 rounded-md data-[hover=true]:bg-white group-data-[focus=true]:bg-white group-data-[focus-visible=true]:ring-0",
-                        label: "text-purple-800 font-medium group-data-[filled-within=true]:text-purple-800",
-                      }
-                    }
+                    classNames={{
+                      base: "w-full",
+                      inputWrapper:
+                        "bg-white border-2 border-blue-300 rounded-md data-[hover=true]:bg-white group-data-[focus=true]:bg-white group-data-[focus-visible=true]:ring-0",
+                      label:
+                        "text-purple-800 font-medium group-data-[filled-within=true]:text-purple-800",
+                    }}
                   />
                 </div>
 
@@ -108,7 +102,11 @@ export default function SignIn() {
                     name="password"
                     autoComplete="current-password"
                     endContent={
-                      <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                      <button
+                        className="focus:outline-none"
+                        type="button"
+                        onClick={toggleVisibility}
+                      >
                         {isVisible ? (
                           <EyeSlashFilledIcon className="text-2xl text-purple-800 pointer-events-none" />
                         ) : (
@@ -117,13 +115,13 @@ export default function SignIn() {
                       </button>
                     }
                     type={isVisible ? "text" : "password"}
-                    classNames={
-                      {
-                        base: "w-full",
-                        inputWrapper: "bg-white border-2 border-blue-300 rounded-md data-[hover=true]:bg-white group-data-[focus=true]:bg-white group-data-[focus-visible=true]:ring-0",
-                        label: "text-purple-800 font-medium group-data-[filled-within=true]:text-purple-800",
-                      }
-                    }
+                    classNames={{
+                      base: "w-full",
+                      inputWrapper:
+                        "bg-white border-2 border-blue-300 rounded-md data-[hover=true]:bg-white group-data-[focus=true]:bg-white group-data-[focus-visible=true]:ring-0",
+                      label:
+                        "text-purple-800 font-medium group-data-[filled-within=true]:text-purple-800",
+                    }}
                   />
                 </div>
 
@@ -142,7 +140,7 @@ export default function SignIn() {
                     sx={{
                       ".MuiLoadingButton-loadingIndicator": {
                         color: "white",
-                      }
+                      },
                     }}
                   >
                     {!isLoading && "Entrar"}
@@ -154,7 +152,7 @@ export default function SignIn() {
                 Não possui uma conta?{" "}
                 <a
                   href="#"
-                  className="font-semibold leading-6 hover:text-purple-600"
+                  className="font-semibold leading-6 hover:text-purple-600 underline"
                 >
                   Veja nossos planos
                 </a>

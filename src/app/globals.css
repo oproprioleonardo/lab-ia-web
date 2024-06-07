@@ -19,6 +19,22 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
+.text-colorful {
+  background: rgb(119, 56, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(119, 56, 255, 1),
+    rgba(78, 195, 253, 1)
+  );
+  @apply text-transparent bg-clip-text;
+}
+
+.background-img {
+  background-image: url("./../../public/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -33,17 +49,6 @@ select:-webkit-autofill:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
-}
-
-.border-special {
-  border-style: solid;
-  border-image: linear-gradient(
-      147.33deg,
-      rgba(0, 164, 246, 0.3) 0%,
-      rgba(119, 56, 255, 0.3) 100%
-    )
-    1;
-  border-radius: 0.75rem !important;
 }
 
 .btn-background {

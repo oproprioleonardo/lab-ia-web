@@ -22,3 +22,8 @@ export async function logout() {
   await authService.logout();
   redirect("/auth/sign-in");
 }
+
+export async function getSession() {
+  const authService = new AuthService();
+  return authService.getSession();
+}

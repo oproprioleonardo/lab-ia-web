@@ -1,9 +1,9 @@
 "use client";
 
 import CustomizedSteppers from "@/components/CustomizedSteppers";
-import FormField from "@/components/dai/new/FormField";
-import { arboriaFont } from "@/fonts/Arboria/arboria";
-import { kallistoFont } from "@/fonts/Kallisto/kallisto";
+import FormField from "@/components/FormField";
+import { arboriaFont } from "@/fonts/arboria";
+import { kallistoFont } from "@/fonts/kallisto";
 import { useState } from "react";
 
 const steps = [

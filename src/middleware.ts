@@ -1,4 +1,4 @@
-import { authRoutes, protectedRoutes } from "./router/routes";
+import { authRoutes, protectedRoutes } from "./routes";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { SessionData } from "./models";
@@ -44,7 +44,7 @@ export async function middleware(request: NextRequest) {
 
   if (isAuthRoute) {
     if (request.cookies.has("auth_session")) {
-      return NextResponse.redirect(new URL("/dai", request.nextUrl));
+      return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
     }
   }
 

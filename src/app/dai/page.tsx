@@ -1,7 +1,7 @@
 "use client";
 
-import { arboriaFont } from "@/fonts/Arboria/arboria";
-import { kallistoFont } from "@/fonts/Kallisto/kallisto";
+import arboriaFont from "@/fonts/arboria";
+import kallistoFont from "@/fonts/kallisto";
 import { createDAI } from "@/server-actions/dai.action";
 import { toastConfig } from "@/utils";
 import { AttachFile, PictureAsPdf, Close, Save } from "@mui/icons-material";
@@ -295,16 +295,16 @@ export default function PersonalizeDai() {
                 </div>
               ) : (
                 <Grow in={!!knowledgeFile && !!behaviorFile}>
-                <LoadingButton
-                  className="mt-16 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
-                  loading={isLoading}
-                  type="submit"
-                  loadingPosition="start"
-                  startIcon={<Save />}
-                  variant="contained"
-                >
-                  <span>Confirmar</span>
-                </LoadingButton>
+                  <LoadingButton
+                    className="mt-16 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
+                    loading={isLoading}
+                    type="submit"
+                    loadingPosition="start"
+                    startIcon={<Save />}
+                    variant="contained"
+                  >
+                    <span>Confirmar</span>
+                  </LoadingButton>
                 </Grow>
               )}
             </form>
