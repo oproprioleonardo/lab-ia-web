@@ -14,7 +14,7 @@ export async function login(data: {
   const authService = new AuthService();
   const error = await authService.login({ email, password });
   if (error) return error;
-  redirect(redirect_to || "/dai");
+  redirect(redirect_to || "/dashboard");
 }
 
 export async function logout() {
