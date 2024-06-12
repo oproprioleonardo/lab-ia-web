@@ -133,14 +133,14 @@ export default function SignIn() {
 
                 <div>
                   <LoadingButton
-                    className="w-full h-10 rounded-md text-white hover:text-gray-50 btn-background px-3 py-3 text-base font-medium shadow-sm"
+                    className="w-full h-10 rounded-md text-white normal-case hover:text-gray-50 btn-background px-3 py-3 text-base font-medium shadow-sm"
                     loading={isLoading}
                     type="submit"
                     variant="contained"
                     sx={{
                       ".MuiLoadingButton-loadingIndicator": {
                         color: "white",
-                      },
+                      }
                     }}
                   >
                     {!isLoading && "Entrar"}

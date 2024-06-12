@@ -15,6 +15,15 @@ const theme = createTheme({
       inter.style.fontFamily,
     ].join(","),
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+        },
+      },
+    },
+  },
 });
 
 export default theme;

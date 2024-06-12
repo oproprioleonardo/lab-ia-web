@@ -1,0 +1,15 @@
+.btn-background {
+  background: linear-gradient(90deg, #7738FF 0%, #4EC3FD 100%);
+}
+
+.card-background-1 {
+  background: linear-gradient(90deg, rgba(119, 56, 255, 0.2) 0%, rgba(78, 195, 253, 0.2) 100%);
+}
+
+.card-background-2 {
+  background: linear-gradient(90deg, rgba(78, 195, 253, 0.2) 0%, rgba(119, 56, 255, 0.2) 100%);
+}
+
+.btn-background:hover {
+  background: linear-gradient(90deg, #7738FF 0%, #4EC3FD 95%);
+}

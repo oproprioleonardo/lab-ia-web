@@ -1,26 +1,29 @@
 "use client";
 
+import Header from "@/components/Header";
 import arboriaFont from "@/fonts/arboria";
-import kallistoFont from "@/fonts/kallisto";
+import ubuntu from "@/fonts/ubuntu";
 import { createDAI } from "@/server-actions/dai.action";
 import { toastConfig } from "@/utils";
-import { AttachFile, PictureAsPdf, Close, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Card, Collapse, Grow } from "@mui/material";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import "@/app/dai/style.css";
 
 import "react-toastify/dist/ReactToastify.min.css";
+import redditFont from "@/fonts/reddit-mono";
+import InsertDocumentsCard from "@/components/dai/InsertDocumentsCard";
+import Image from "next/image";
 
 export default function PersonalizeDai() {
   const [knowledgeFile, setKnowledgeFile] = useState<File | null>(null);
   const [behaviorFile, setBehaviorFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiKey, setApiKey] = useState<string | null>(null);
-  const [growBehavior, setGrowBehavior] = useState<boolean>(false);
-  const [growKnowledge, setGrowKnowledge] = useState<boolean>(false);
 
+  const hasAnyFile = knowledgeFile || behaviorFile;
   function notifySuccess(message: string) {
     toast.success(message, toastConfig);
   }
@@ -63,9 +66,6 @@ export default function PersonalizeDai() {
     const file = e.target.files ? e.target.files[0] : null;
     setApiKey(null);
     setKnowledgeFile(file);
-    setTimeout(() => {
-      setGrowKnowledge(true);
-    }, 100);
     e.target.value = "";
   };
 
@@ -73,213 +73,53 @@ export default function PersonalizeDai() {
     const file = e.target.files ? e.target.files[0] : null;
     setApiKey(null);
     setBehaviorFile(file);
-    setTimeout(() => {
-      setGrowBehavior(true);
-    }, 100);
     e.target.value = "";
   };
 
   return (
     <>
       <div
-        className={`overflow-hidden bg-gray-100 min-h-full relative ${arboriaFont.className}`}
+        className={`overflow-hidden background-img min-h-full relative text-purple-700 ${arboriaFont.className}`}
       >
-        <div
-          className="h-8 w-full"
-          style={{ backgroundColor: "#E1DEED" }}
-        ></div>
-        <header
-          className={`flex shadow-sm justify-start items-center header-background text-white h-20 ${kallistoFont.className}`}
-        >
-          <h1 className={`mx-auto font-semibold text-2xl`}>
-            DAI Assistente Inteligente
-          </h1>
-        </header>
-        <div
-          className="h-6 w-full"
-          style={{ backgroundColor: "#E1DEED" }}
-        ></div>
+        <Header />
+
         <section
-          className="text-black w-full pt-4 pb-4"
-          style={{ backgroundColor: "#E1DEED" }}
+          className={`mt-12 w-full py-6 ${ubuntu.className} bg-white bg-opacity-80 font-medium`}
         >
-          <p className="font-normal text-3xl text-center">
-            Personalize sua DAI
+          <p className="text-2xl text-center">Personalize sua DAI</p>
+
+          <p className="text-center text-base pt-2">
+            Envie arquivos em formato PDF para Conhecimentos e Comportamentos,
+            ou preencha nosso formulário.
           </p>
         </section>
 
         <div className="w-full">
-          <Collapse in={!knowledgeFile && !behaviorFile}>
-            <div>
-              <div className="w-full flex flex-row items-center justify-center pt-6 pb-4">
-                <Link href="/dai/form">
-                  <button className="text-xl px-6 py-4 rounded-md sm:rounded-2xl shadow-xl bg-cyan-500 text-black duration-150 hover:bg-cyan-300">
-                    Preencher Formulário de Informações
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </Collapse>
-
           <div className="w-full pt-4 pb-8">
             <form
               onSubmit={onSubmit}
               className="flex flex-col items-center justify-between"
             >
-              <div className="text-center mx-4 md:mx-0">
-                <span className="text-xl">
-                  Anexe os arquivos necessários para o funcionamento da DAI:
-                </span>
-              </div>
-
               <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-full md:w-2/3 h-fit">
-                <div className="py-8 px-12 bg-white rounded-md shadow-md flex flex-col xl:w-5/12 w-full xl:mb-0 mb-8">
-                  <div className="mb-3">
-                    <span className="text-xl">Conhecimento</span>
-                  </div>
-                  <div className="mb-6 text-sm">
-                    Informações essenciais sobre a empresa e dados necessários
-                    para a resposta de perguntas relacionadas ao seu negócio.
-                  </div>
+                <InsertDocumentsCard
+                  title="Conhecimento"
+                  description="Informações essenciais sobre a empresa e dados necessários para a resposta de perguntas relacionadas ao seu negócio."
+                  className="card-background-1"
+                  handleFileChange={handleKnowledgeFileChange}
+                  file={knowledgeFile}
+                  setFile={setKnowledgeFile}
+                  id="knowledge_file"
+                />
 
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="knowledge_file"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-purple-800 border-dashed rounded-lg cursor-pointer bg-gray-200 duration-300 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-row items-center w-full">
-                        <div className="bg-purple-700 p-1 rounded-lg shadow-sm mx-6">
-                          <AttachFile
-                            style={{
-                              fontSize: "2.0rem",
-                            }}
-                            className="text-white"
-                          />
-                        </div>
-                        <div className="text-sm text-black mr-6">
-                          <p>
-                            <span className="font-semibold">
-                              Arraste e solte
-                            </span>{" "}
-                            ou
-                          </p>
-                          <p>
-                            <span className="font-semibold">Clique</span> e faça
-                            upload do seu arquivo
-                          </p>
-                        </div>
-                      </div>
-                      <input
-                        id="knowledge_file"
-                        name="knowledge_file"
-                        type="file"
-                        className="hidden"
-                        accept=".pdf"
-                        onChange={handleKnowledgeFileChange}
-                      />
-                    </label>
-                  </div>
-
-                  {knowledgeFile && (
-                    <Grow in={growKnowledge} className="mt-4">
-                      <div>
-                        <span>Arquivos anexados:</span>
-                        <div className="bg-gray-300 mt-4 px-10 py-4 flex flex-row items-center justify-between rounded-md w-full">
-                          <div className="flex items-center overflow-hidden">
-                            <PictureAsPdf className="text-gray-700 mr-2" />
-                            <span className="overflow-hidden whitespace-nowrap text-ellipsis">
-                              {knowledgeFile.name}
-                            </span>
-                          </div>
-
-                          <Close
-                            onClick={() => {
-                              setGrowKnowledge(false);
-                              setTimeout(() => {
-                                setKnowledgeFile(null);
-                              }, 250);
-                            }}
-                            className="text-gray-700 cursor-pointer hover:text-gray-500"
-                          />
-                        </div>
-                      </div>
-                    </Grow>
-                  )}
-                </div>
-
-                <div className="py-8 px-12 bg-white rounded-md shadow-md flex flex-col xl:w-5/12 w-full">
-                  <div className="mb-3">
-                    <span className="text-xl">Comportamento</span>
-                  </div>
-                  <div className="mb-6 text-sm">
-                    Descrição da DAI, expectativas de como ela deverá se portar
-                    e interagir com o cliente.
-                  </div>
-
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="behavior_file"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-purple-800 border-dashed rounded-lg cursor-pointer bg-gray-200 duration-300 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-row items-center w-full">
-                        <div className="bg-purple-700 p-1 rounded-lg shadow-sm mx-6">
-                          <AttachFile
-                            style={{
-                              fontSize: "2.0rem",
-                            }}
-                            className="text-white"
-                          />
-                        </div>
-                        <div className="text-sm text-black mr-6">
-                          <p>
-                            <span className="font-semibold">
-                              Arraste e solte
-                            </span>{" "}
-                            ou
-                          </p>
-                          <p>
-                            <span className="font-semibold">Clique</span> e faça
-                            upload do seu arquivo
-                          </p>
-                        </div>
-                      </div>
-                      <input
-                        id="behavior_file"
-                        name="behavior_file"
-                        type="file"
-                        accept=".pdf"
-                        className="hidden"
-                        onChange={handleBehaviorFileChange}
-                      />
-                    </label>
-                  </div>
-
-                  {behaviorFile && (
-                    <Grow in={growBehavior} className="mt-4">
-                      <div>
-                        <span>Arquivos anexados:</span>
-                        <div className="bg-gray-300 mt-4 px-10 py-4 flex flex-row items-center justify-between rounded-md w-full">
-                          <div className="flex items-center overflow-hidden">
-                            <PictureAsPdf className="text-gray-700 mr-2" />
-                            <span className="overflow-hidden whitespace-nowrap text-ellipsis">
-                              {behaviorFile.name}
-                            </span>
-                          </div>
-
-                          <Close
-                            onClick={() => {
-                              setGrowBehavior(false);
-                              setTimeout(() => {
-                                setBehaviorFile(null);
-                              }, 250);
-                            }}
-                            className="text-gray-700 cursor-pointer hover:text-gray-500"
-                          />
-                        </div>
-                      </div>
-                    </Grow>
-                  )}
-                </div>
+                <InsertDocumentsCard
+                  title="Comportamento"
+                  description="Descrição da DAI, expectativas de como ela deverá se portar e interagir com o cliente."
+                  className="card-background-2"
+                  handleFileChange={handleBehaviorFileChange}
+                  file={behaviorFile}
+                  setFile={setBehaviorFile}
+                  id="behavior_file"
+                />
               </div>
 
               {apiKey ? (
@@ -296,19 +136,51 @@ export default function PersonalizeDai() {
               ) : (
                 <Grow in={!!knowledgeFile && !!behaviorFile}>
                   <LoadingButton
-                    className="mt-16 bg-cyan-500 text-black px-6 py-3 rounded-md shadow-md text-lg duration-150 hover:bg-cyan-300"
+                    className={`mt-16 btn-background text-white ${arboriaFont.className} font-medium w-52 h-14 rounded-2xl shadow-md text-lg duration-150`}
                     loading={isLoading}
                     type="submit"
-                    loadingPosition="start"
-                    startIcon={<Save />}
+                    loadingPosition="center"
                     variant="contained"
                   >
-                    <span>Confirmar</span>
+                    {!isLoading && "Enviar"}
                   </LoadingButton>
                 </Grow>
               )}
             </form>
           </div>
+
+          <Collapse in={!knowledgeFile && !behaviorFile}>
+            {!(knowledgeFile || behaviorFile) && (
+              <div>
+                <div className="w-full flex flex-col items-center justify-center pt-6 pb-4">
+                  <div className="mb-4">
+                    <span
+                      className={`${redditFont.className} font-medium text-base text-purple-900`}
+                    >
+                      Ainda não possui Arquivos ? Preencha nosso formulário:
+                    </span>
+                  </div>
+
+                  <Link href="/dai/form">
+                    <button className="text-xl flex flex-row items-center px-24 py-6 rounded-xl sm:rounded-2xl shadow-xl border-2 border-white bg-white bg-opacity-60 duration-250 hover:bg-opacity-100">
+                      <Image
+                        className="mr-4"
+                        src="question.svg"
+                        alt="icone"
+                        width={20}
+                        height={20}
+                      />
+                      <span
+                        className={`${redditFont.className} font-medium text-purple-900`}
+                      >
+                        Formulário de personalização
+                      </span>
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </Collapse>
         </div>
       </div>
       <ToastContainer />

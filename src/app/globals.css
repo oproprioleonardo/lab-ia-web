@@ -69,6 +69,10 @@ select:-webkit-autofill:focus {
   );
 }
 
+.MuiLoadingButton-loadingIndicatorCenter {
+  color: #fff;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
