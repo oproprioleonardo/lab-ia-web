@@ -85,8 +85,8 @@ export default function SignIn() {
                     {...register("password", {
                       required: "A senha é obrigatória",
                       minLength: {
-                        value: 8,
-                        message: "A senha deve ter no mínimo 8 caracteres",
+                        value: 5,
+                        message: "A senha deve ter no mínimo 5 caracteres",
                       },
                       maxLength: {
                         value: 20,
