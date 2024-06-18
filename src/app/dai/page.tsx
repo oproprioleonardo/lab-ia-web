@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import arboriaFont from "@/fonts/arboria";
 import ubuntu from "@/fonts/ubuntu";
 import { createDAI } from "@/server-actions/dai.action";
@@ -95,12 +95,12 @@ export default function PersonalizeDai() {
         </section>
 
         <div className="w-full">
-          <div className="w-full pt-4 pb-8">
+          <div className="w-full pt-4">
             <form
               onSubmit={onSubmit}
               className="flex flex-col items-center justify-between"
             >
-              <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-full md:w-2/3 h-fit">
+              <div className="mt-8 flex xl:flex-row xl:items-stretch xl:justify-between flex-col items-center w-full md:w-10/12 xl:w-2/3 h-fit">
                 <InsertDocumentsCard
                   title="Conhecimento"
                   description="Informações essenciais sobre a empresa e dados necessários para a resposta de perguntas relacionadas ao seu negócio."
@@ -152,7 +152,7 @@ export default function PersonalizeDai() {
           <Collapse in={!knowledgeFile && !behaviorFile}>
             {!(knowledgeFile || behaviorFile) && (
               <div>
-                <div className="w-full flex flex-col items-center justify-center pt-6 pb-4">
+                <div className="w-full flex flex-col items-center justify-center pb-4">
                   <div className="mb-4">
                     <span
                       className={`${redditFont.className} font-medium text-base text-purple-900`}

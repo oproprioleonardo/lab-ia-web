@@ -23,8 +23,8 @@ export default function RedirectCard({
 
   return (
     <div onClick={() => router.push(route)} className={className}>
-      <Card className="py-2 px-6 bg-white bg-opacity-60 border-2 border-white shadow-md cursor-pointer hover:bg-opacity-100 rounded-2xl">
-        <CardBody className="text-purple-800 flex flex-col justify-between">
+      <Card className="py-2 px-6 bg-white bg-opacity-60 border-2 border-white h-full w-full shadow-md cursor-pointer hover:bg-opacity-100 rounded-2xl">
+        <CardBody className="text-purple-800 flex flex-col">
           <div className="flex flex-row items-center">
             <Image src={icon} alt="icone" width={24} height={24} />
             <span

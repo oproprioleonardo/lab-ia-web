@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import { useEffect, useState } from "react";
 import { SessionData } from "@/models";
 import { getSession } from "@/server-actions/auth.action";
@@ -38,10 +38,10 @@ export default function Dashboard() {
           </Skeleton>
         </section>
 
-        <section className="mt-12 grid grid-cols-4 grid-rows-4 gap-14">
-          <Card className="row-span-2 bg-opacity-20 col-span-2 bg-[#809AF833] border-2 border-white flex items-center justify-center shadow-md rounded-3xl">
-            <CardBody className="w-11/12 my-6">
-              <div className="mb-6 p-2 text-violet-700">
+        <section className="mt-12 grid grid-cols-4 grid-rows-4 gap-14 pb-4">
+          <Card className="row-span-2 bg-opacity-20 col-span-4 lg:col-span-2 bg-[#809AF833] border-2 border-white flex items-center justify-center shadow-md rounded-3xl">
+            <CardBody className="w-11/12 py-10 flex flex-col">
+              <div className="px-2 mb-8 text-violet-700">
                 <p className={`px-2 ${ubuntu.className} font-bold text-2xl`}>
                   Sua DAI está ONLINE!
                 </p>
@@ -66,14 +66,14 @@ export default function Dashboard() {
           </Card>
 
           <RedirectCard
-            className="row-span-1 col-span-2"
+            className="row-span-1 col-span-4 lg:col-span-2"
             title="Personalizar DAI"
             description="Requisitar mudança de Comportamentos ou Conhecimentos da DAI"
             icon="robo.svg"
             route="/dai"
           />
           <RedirectCard
-            className="row-span-1 col-span-2"
+            className="row-span-1 col-span-4 lg:col-span-2"
             title="Pagamento"
             description="Informações de pagamento"
             icon="payment.svg"

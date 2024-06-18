@@ -1,5 +1,12 @@
 import redditFont from "@/fonts/reddit-mono";
 import Link from "next/link";
+import MenuDropdown from "./Dropdown";
+
+const items = [
+  { key: "home", route: "/dashboard", label: "Home" },
+  { key: "dai", route: "/dai", label: "Personalizar DAI" },
+  { key: "payment", route: "/payment", label: "Pagamento" },
+]
 
 export default function Header() {
   return (
@@ -13,7 +20,7 @@ export default function Header() {
           </span>
         </div>
 
-        <div className="w-2/5">
+        <div className="hidden lg:block w-[48%]">
           <nav className="flex flex-row justify-evenly text-base font-normal">
             <div>
               <Link className="hover:text-purple-700 duration-300" href={{ pathname: "/dashboard" }}>Home</Link>
@@ -25,6 +32,10 @@ export default function Header() {
               <Link className="hover:text-purple-700 duration-300" href={{ pathname: "/payment" }}>Pagamento</Link>
             </div>
           </nav>
+        </div>
+
+        <div className="lg:hidden">
+          <MenuDropdown items={items} />
         </div>
       </div>
     </div>

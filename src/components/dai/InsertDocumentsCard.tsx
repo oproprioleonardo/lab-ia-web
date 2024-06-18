@@ -31,14 +31,14 @@ export default function InsertDocumentsCard({
 
   return (
     <div
-      className={`py-8 px-12 text-violet-900 ${className} border-2 border-white rounded-2xl shadow-xl flex flex-col xl:w-5/12 w-full xl:mb-0 mb-8`}
+      className={`py-8 px-12 text-violet-900 ${className} border-2 border-white rounded-2xl shadow-xl flex flex-col lg:w-9/12 xl:w-5/12 w-full xl:mb-0 mb-8`}
     >
       <div className="mb-3 text-center">
         <span className={`text-2xl ${redditFont.className} font-medium`}>
           {title}
         </span>
       </div>
-      <div className={`mb-6 text-sm ${ubuntu.className} font-normal`}>
+      <div className={`mb-6 text-sm ${ubuntu.className} font-normal text-justify`}>
         {description}
       </div>
 

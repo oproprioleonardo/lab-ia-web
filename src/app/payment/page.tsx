@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import RedirectCard from "@/components/dashboard/RedirectCard";
 import redditFont from "@/fonts/reddit-mono";
 import ubuntu from "@/fonts/ubuntu";
