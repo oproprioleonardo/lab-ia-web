@@ -70,6 +70,8 @@ export default function NewDai() {
         <h1 className="font-semibold text-3xl">DAI Assistente Inteligente</h1>
       </header>
 
+      <title>Personalizar Assistente | DAI</title>
+
       <section className="bg-white flex justify-between items-center shadow-md sticky top-0 z-50 text-purple-900 w-full mt-10 xl:px-48 pt-4 pb-4">
         <div className="w-full text-center xl:w-4/12 xl:text-start">
           <p className="font-bold text-2xl mb-4">Personalize sua DAI</p>

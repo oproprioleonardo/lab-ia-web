@@ -1,5 +1,10 @@
 import Header from "@/components/header/Header";
 import RedirectCard from "@/components/dashboard/RedirectCard";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Pagamento",
+};
 
 export default function Payment() {
   return (

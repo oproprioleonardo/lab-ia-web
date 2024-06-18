@@ -77,7 +77,7 @@ export default function PersonalizeDai() {
         className={`overflow-hidden background-img min-h-full relative text-purple-700 font-secondary`}
       >
         <Header />
-
+        <title>Criar Assistente | DAI</title>
         <section
           className={`mt-12 w-full py-6 font-primary bg-white bg-opacity-80 font-medium`}
         >
