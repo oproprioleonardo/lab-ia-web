@@ -1,5 +1,3 @@
-import redditFont from "@/fonts/reddit-mono";
-import ubuntu from "@/fonts/ubuntu";
 import { AttachFile, Close, PictureAsPdf } from "@mui/icons-material";
 import { Grow } from "@mui/material";
 import { ChangeEvent, useState } from "react";
@@ -34,11 +32,9 @@ export default function InsertDocumentsCard({
       className={`py-8 px-12 text-violet-900 ${className} border-2 border-white rounded-2xl shadow-xl flex flex-col lg:w-9/12 xl:w-5/12 w-full xl:mb-0 mb-8`}
     >
       <div className="mb-3 text-center">
-        <span className={`text-2xl ${redditFont.className} font-medium`}>
-          {title}
-        </span>
+        <span className={`text-2xl font-mono font-medium`}>{title}</span>
       </div>
-      <div className={`mb-6 text-sm ${ubuntu.className} font-normal text-justify`}>
+      <div className={`mb-6 text-base font-primary font-normal text-justify`}>
         {description}
       </div>
 
@@ -56,7 +52,7 @@ export default function InsertDocumentsCard({
                 className="text-white"
               />
             </div>
-            <div className={`text-sm mr-6 font-medium ${ubuntu.className}`}>
+            <div className={`text-base mr-6 font-medium font-primary`}>
               <p>Arraste e solte ou</p>
               <p>Clique e faça upload do seu arquivo</p>
             </div>
@@ -75,9 +71,7 @@ export default function InsertDocumentsCard({
       {file && (
         <Grow in={grow} className="mt-4">
           <div>
-            <span className={`${redditFont.className} font-medium`}>
-              Arquivos anexados:
-            </span>
+            <span className={`font-mono font-medium`}>Arquivos anexados:</span>
             <div className="bg-white bg-opacity-80 mt-4 px-10 py-4 flex flex-row items-center justify-between rounded-md w-full">
               <div className="flex items-center overflow-hidden">
                 <PictureAsPdf className="bg-white bg-opacity-80 mr-2" />

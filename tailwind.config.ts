@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const {nextui} = require("@nextui-org/react");
+import { nextui } from "@nextui-org/react";
 
 const config: Config = {
   content: [
@@ -11,6 +11,14 @@ const config: Config = {
   important: true,
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--serenity-font)"],
+        primary: ["var(--serenity-font)"],
+        secondary: ["var(--arboria-font)"],
+        terciary: ["var(--aviano-font)"],
+        title: ["var(--kallisto-font)"],
+        mono: ["var(--reddit-font)"],
+      },
     },
   },
   darkMode: "class",

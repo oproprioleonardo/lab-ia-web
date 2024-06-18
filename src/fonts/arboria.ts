@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 
-const arboriaFont = localFont({
+const arboria = localFont({
   display: "swap",
   variable: "--arboria-font",
   src: [
@@ -70,4 +70,4 @@ const arboriaFont = localFont({
   ],
 });
 
-export default arboriaFont;
+export default arboria;

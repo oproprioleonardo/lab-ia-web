@@ -2,8 +2,6 @@
 
 import CustomizedSteppers from "@/components/CustomizedSteppers";
 import FormField from "@/components/FormField";
-import arboriaFont from "@/fonts/arboria";
-import kallistoFont from "@/fonts/kallisto";
 import { useState } from "react";
 
 const steps = [
@@ -64,10 +62,10 @@ export default function NewDai() {
       style={{
         backgroundColor: "#E3E2EA",
       }}
-      className={`min-h-full relative ${arboriaFont.className}`}
+      className={`min-h-full relative font-secondary`}
     >
       <header
-        className={`flex shadow-sm justify-center header-background items-center text-white h-20 ${kallistoFont.className}`}
+        className={`flex shadow-sm justify-center header-background items-center text-white h-20 font-title`}
       >
         <h1 className="font-semibold text-3xl">DAI Assistente Inteligente</h1>
       </header>

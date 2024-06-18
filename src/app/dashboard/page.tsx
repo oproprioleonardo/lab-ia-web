@@ -1,54 +1,31 @@
-"use client";
-
 import Header from "@/components/header/Header";
-import { useEffect, useState } from "react";
-import { SessionData } from "@/models";
-import { getSession } from "@/server-actions/auth.action";
-import ubuntu from "@/fonts/ubuntu";
-import { Card, CardBody, Skeleton, Switch } from "@nextui-org/react";
-import arboriaFont from "@/fonts/arboria";
-import redditFont from "@/fonts/reddit-mono";
+import { Card, CardBody, Switch } from "@nextui-org/react";
 import Image from "next/image";
 import RedirectCard from "@/components/dashboard/RedirectCard";
+import Welcome from "@/components/dashboard/Welcome";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 export default function Dashboard() {
-  const [sessionData, setSessionData] = useState<SessionData | null>(null);
-  const [isLoaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    getSession().then((session) => {
-      if (!session) return;
-      setSessionData(session);
-      setLoaded(true);
-    });
-  }, [setSessionData, setLoaded]);
-
   return (
     <div className="min-h-full flex flex-col items-center background-img">
       <Header />
 
       <div className="w-9/12">
-        <section className="mt-14 ml-6">
-          <Skeleton isLoaded={isLoaded}>
-            <span
-              className={`text-2xl font-medium ${ubuntu.className} text-violet-600`}
-            >
-              Bem-vindo, {sessionData?.user.name}!
-            </span>
-          </Skeleton>
-        </section>
+        <Welcome />
 
         <section className="mt-12 grid grid-cols-4 grid-rows-4 gap-14 pb-4">
           <Card className="row-span-2 bg-opacity-20 col-span-4 lg:col-span-2 bg-[#809AF833] border-2 border-white flex items-center justify-center shadow-md rounded-3xl">
             <CardBody className="w-11/12 py-10 flex flex-col">
               <div className="px-2 mb-8 text-violet-700">
-                <p className={`px-2 ${ubuntu.className} font-bold text-2xl`}>
+                <p className={`px-2 font-primary font-bold text-2xl`}>
                   Sua DAI está ONLINE!
                 </p>
 
-                <p
-                  className={`px-2 mt-4 text-sm font-medium ${arboriaFont.className}`}
-                >
+                <p className={`px-2 mt-4 text-sm font-medium font-secondary`}>
                   Sua assistente está disponível para uso, desative no botão a
                   baixo.
                 </p>
@@ -56,7 +33,7 @@ export default function Dashboard() {
 
               <div className="bg-white bg-opacity-40 w-full p-2 border-2 rounded-[36px] border-blue-300 flex flex-row justify-between items-center">
                 <span
-                  className={`text-colorful text-base font-semibold px-4 ${redditFont.className}`}
+                  className={`text-colorful text-base font-semibold px-4 font-mono`}
                 >
                   ONLINE
                 </span>
@@ -84,14 +61,12 @@ export default function Dashboard() {
             <CardBody className="my-6 w-11/12 text-violet-700">
               <div className="mb-6 p-2">
                 <span
-                  className={`px-2 ${arboriaFont.className} text-2xl font-medium text-colorful`}
+                  className={`px-2 font-secondary text-2xl font-medium text-colorful`}
                 >
                   Chave de acesso
                 </span>
 
-                <p
-                  className={`px-2 mt-4 text-sm font-medium ${arboriaFont.className}`}
-                >
+                <p className={`px-2 mt-4 text-sm font-medium font-secondary`}>
                   Sua chave permite que você faça várias coisas como abrir e
                   fechar portas.
                 </p>
@@ -99,18 +74,14 @@ export default function Dashboard() {
 
               <div className="flex flex-row justify-between">
                 <div className="flex-grow p-4 flex items-center bg-white bg-opacity-70 border-blue-300 border-2 rounded-2xl cursor-pointer hover:bg-opacity-100 hover:bg-gray-100 duration-300">
-                  <span
-                    className={`text-sm ${arboriaFont.className} font-normal`}
-                  >
+                  <span className={`text-sm font-secondary font-normal`}>
                     Gerar Chave
                   </span>
                 </div>
 
                 <div className="ml-6 p-4 bg-white bg-opacity-70 flex flex-row items-center border-blue-300 border-2 rounded-2xl cursor-pointer hover:bg-opacity-100 hover:bg-gray-100 duration-300">
                   <Image src={"copy.svg"} alt="Copiar" width={16} height={16} />
-                  <span
-                    className={`ml-2 text-sm ${arboriaFont.className} font-medium`}
-                  >
+                  <span className={`ml-2 text-sm font-secondary font-medium`}>
                     Copiar
                   </span>
                 </div>

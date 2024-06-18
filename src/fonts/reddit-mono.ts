@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 
-const redditFont = localFont({
+const reddit = localFont({
   display: "swap",
   variable: "--reddit-font",
   src: [
@@ -43,4 +43,4 @@ const redditFont = localFont({
   ],
 });
 
-export default redditFont;
+export default reddit;

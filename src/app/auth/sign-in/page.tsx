@@ -3,7 +3,6 @@
 import { login } from "@/server-actions/auth.action";
 import { useForm } from "react-hook-form";
 
-import arboriaFont from "@/fonts/arboria";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 
@@ -35,12 +34,12 @@ export default function SignIn() {
   return (
     <div className="min-h-full relative flex flex-col justify-center items-center background-img">
       <ToastContainer />
-      <div className={`${arboriaFont.className} z-10 h-fit`}>
+      <div className={`font-secondary z-10 h-fit`}>
         <div className="flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-300 to-purple-300 p-1">
           <div className="bg-gray-50 py-8 px-20 max-w-fit self-center rounded-lg text-purple-800">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <div
-                className={`mt-6 text-center text-colorful text-3xl font-bold leading-9 tracking-tight ${arboriaFont.className}`}
+                className={`mt-6 text-center text-colorful text-3xl font-bold leading-9 tracking-tight font-secondary`}
               >
                 Log-in
               </div>
@@ -140,7 +139,7 @@ export default function SignIn() {
                     sx={{
                       ".MuiLoadingButton-loadingIndicator": {
                         color: "white",
-                      }
+                      },
                     }}
                   >
                     {!isLoading && "Entrar"}

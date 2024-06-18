@@ -1,8 +1,6 @@
 "use client";
 
 import Header from "@/components/header/Header";
-import arboriaFont from "@/fonts/arboria";
-import ubuntu from "@/fonts/ubuntu";
 import { createDAI } from "@/server-actions/dai.action";
 import { toastConfig } from "@/utils";
 import { LoadingButton } from "@mui/lab";
@@ -11,9 +9,7 @@ import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "@/app/dai/style.css";
-
 import "react-toastify/dist/ReactToastify.min.css";
-import redditFont from "@/fonts/reddit-mono";
 import InsertDocumentsCard from "@/components/dai/InsertDocumentsCard";
 import Image from "next/image";
 
@@ -23,7 +19,6 @@ export default function PersonalizeDai() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiKey, setApiKey] = useState<string | null>(null);
 
-  const hasAnyFile = knowledgeFile || behaviorFile;
   function notifySuccess(message: string) {
     toast.success(message, toastConfig);
   }
@@ -79,16 +74,16 @@ export default function PersonalizeDai() {
   return (
     <>
       <div
-        className={`overflow-hidden background-img min-h-full relative text-purple-700 ${arboriaFont.className}`}
+        className={`overflow-hidden background-img min-h-full relative text-purple-700 font-secondary`}
       >
         <Header />
 
         <section
-          className={`mt-12 w-full py-6 ${ubuntu.className} bg-white bg-opacity-80 font-medium`}
+          className={`mt-12 w-full py-6 font-primary bg-white bg-opacity-80 font-medium`}
         >
           <p className="text-2xl text-center">Personalize sua DAI</p>
 
-          <p className="text-center text-base pt-2">
+          <p className="text-center text-lg pt-2">
             Envie arquivos em formato PDF para Conhecimentos e Comportamentos,
             ou preencha nosso formulário.
           </p>
@@ -136,7 +131,7 @@ export default function PersonalizeDai() {
               ) : (
                 <Grow in={!!knowledgeFile && !!behaviorFile}>
                   <LoadingButton
-                    className={`mt-16 btn-background text-white ${arboriaFont.className} font-medium w-52 h-14 rounded-2xl shadow-md text-lg duration-150`}
+                    className={`mt-16 btn-background text-white font-secondary font-medium w-52 h-14 rounded-2xl shadow-md text-lg duration-150`}
                     loading={isLoading}
                     type="submit"
                     loadingPosition="center"
@@ -155,7 +150,7 @@ export default function PersonalizeDai() {
                 <div className="w-full flex flex-col items-center justify-center pb-4">
                   <div className="mb-4">
                     <span
-                      className={`${redditFont.className} font-medium text-base text-purple-900`}
+                      className={`font-mono font-medium text-base text-purple-900`}
                     >
                       Ainda não possui Arquivos ? Preencha nosso formulário:
                     </span>
@@ -170,9 +165,7 @@ export default function PersonalizeDai() {
                         width={20}
                         height={20}
                       />
-                      <span
-                        className={`${redditFont.className} font-medium text-purple-900`}
-                      >
+                      <span className={`font-mono font-medium text-purple-900`}>
                         Formulário de personalização
                       </span>
                     </button>

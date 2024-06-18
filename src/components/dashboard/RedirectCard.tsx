@@ -1,7 +1,5 @@
 "use client";
 
-import arboriaFont from "@/fonts/arboria";
-import redditFont from "@/fonts/reddit-mono";
 import { Card, CardBody } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -28,14 +26,14 @@ export default function RedirectCard({
           <div className="flex flex-row items-center">
             <Image src={icon} alt="icone" width={24} height={24} />
             <span
-              className={`ml-3 ${redditFont.className} font-medium text-base`}
+              className={`ml-3 font-mono font-medium text-base`}
             >
               {title}
             </span>
           </div>
           {description && (
             <div className="mt-2">
-              <span className={`${arboriaFont.className} font-normal text-sm`}>
+              <span className={`font-secondary font-normal text-sm`}>
                 {description}
               </span>
             </div>
