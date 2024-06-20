@@ -11,7 +11,7 @@ export class AuthService {
   }
 
   async login(input: { email: string; password: string }) {
-    const response = await fetch(`${process.env.API_BASE_URL}/auth/login`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/auth`, {
       method: "POST",
       body: JSON.stringify({
         email: input.email,
@@ -27,7 +27,7 @@ export class AuthService {
     if (!response.ok) return { error: "Ocorre um erro interno" };
 
     const data = await response.json();
-    const session : SessionData = {
+    const session: SessionData = {
       access_token: data.token,
       user: {
         id: data.user.id,
