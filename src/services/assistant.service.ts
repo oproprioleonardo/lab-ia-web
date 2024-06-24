@@ -10,56 +10,36 @@ export class AssistantService {
 
   async create(data: {
     name?: string;
-    owner_id?: string;
+    rag: File;
+    prompt: File;
   }): Promise<{ error: string } | { id: string; api_key: string }> {
     const session = await this.authService.getSession();
     if (!session) return { error: "Você não está autenticado" };
-    if (!data.owner_id) data.owner_id = session.user.id;
     if (!data.name) data.name = "Assistente de " + session.user.name;
 
-    const response = await fetch(`${process.env.API_BASE_URL}/assistants/add`, {
+    const ragBlob = new Blob([data.rag], { type: "application/pdf" });
+    const promptBlob = new Blob([data.prompt], { type: "application/pdf" });
+
+    const formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("rag", ragBlob, "file");
+    formdata.append("prompt", promptBlob, "file");
+
+    const response = await fetch(`${process.env.API_BASE_URL}/assistants`, {
       method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${await this.authService.getToken()}`,
-      },
-    });
-    
-    if (response.status === 401) return { error: "Você não está autenticado" };
-    if (response.status === 403) return { error: "Você não tem permissão" };
-    if (response.status !== 201) return { error: "Ocorreu um erro interno" };
-    
-    return await response.json();
-  }
-
-  async attachDocument(data: {
-    file: File;
-    assistantId: string;
-    type: string;
-    createdAt?: string;
-  }) {
-    data.createdAt = new Date().toISOString();
-    const formData = new FormData();
-
-    formData.append("assistant_id", data.assistantId);
-    formData.append("file", data.file);
-    formData.append("type", data.type);
-    formData.append("createdAt", data.createdAt);
-
-    const response = await fetch(`${process.env.API_BASE_URL}/documents/add`, {
-      method: "POST",
-      body: formData,
+      body: formdata,
       headers: {
         Authorization: `Bearer ${await this.authService.getToken()}`,
       },
     });
 
+    const json = await response.json();
+
     if (response.status === 401) return { error: "Você não está autenticado" };
     if (response.status === 403) return { error: "Você não tem permissão" };
-    if (response.status !== 201) return { error: "Erro ao enviar o documento" };
+    if (response.status !== 200) return { error: json.error.message };
 
-    return await response.json();
+    return json;
   }
 
   async get(id: string): Promise<{ error: string } | Assistant> {

@@ -25,6 +25,7 @@
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
+    "@iconify/tailwind": "^1.1.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
